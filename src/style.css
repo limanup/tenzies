@@ -3,7 +3,7 @@
 }
 
 body {
-  font-family: 'Karla';
+  font-family: 'Karla', sans-serif;
   margin: 0;
   background: #0B2434;
   padding: 30px;
@@ -16,6 +16,9 @@ main {
   border-radius: 10px;
   margin: auto;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .dice-wrapper {
@@ -25,7 +28,7 @@ main {
   grid-template-columns: repeat(5, 1fr);
   align-items: center;
   grid-gap: 18px;
-  margin: auto;
+  margin-bottom: 30px;
 }
 
 .die {
@@ -41,3 +44,29 @@ main {
   color: #2B283A;
   cursor: pointer;
 }
+
+.roll-btn {
+  font-family: 'Karla';
+  font-size: 16.384px;
+  line-height: 19px;
+  /* display: flex; */
+  /* align-items: center; */
+  /* text-align: center; */
+  color: #FFFFFF;
+  width: 92.16px;
+  height: 35.84px;
+  background: #5035FF;
+  box-shadow: 0px 3.2px 7.68px rgba(0, 0, 0, 0.18);
+  border-radius: 3.81277px;
+  cursor: pointer;
+}
+
+.roll-btn:focus {
+  outline: none;
+}
+
+.roll-btn:active {
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
+
