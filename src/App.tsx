@@ -1,35 +1,38 @@
 import React, { useState } from "react";
 import Die from "./components/Die";
+import {nanoid} from "nanoid";
 
 function App() {
-  
-  const [diceArr, setDiceArr] = useState(allNewDice());
-  // console.log(diceArr)
-  const diceElements = diceArr.map((die) => <Die value={die} />);
-  // console.log(diceElements)
-  
-  function allNewDice() {
-      let diceArr: number[] = [];
+    const [diceArr, setDiceArr] = useState(allNewDice());
+    // console.log(diceArr)
+    const diceElements = diceArr.map((die) => (
+        <Die value={die.value} key={die.id} />
+    ));
+    // console.log(diceElements)
 
-      for (let i: number = 0; i < 10; i++) {
-          diceArr.push(Math.ceil(Math.random() * 6));
-      }
+    function allNewDice() {
+        let diceArr: { value: number, isHeld: boolean, id: string }[] = [];
 
-      return diceArr;
-  }
+        for (let i: number = 0; i < 10; i++) {
+            diceArr.push({
+                value: Math.ceil(Math.random() * 6),
+                isHeld: false,
+                id: nanoid()
+            });
+        }
 
-  function rollDice() {
-    setDiceArr(allNewDice())
-  }
+        return diceArr;
+    }
+
+    function rollDice() {
+        setDiceArr(allNewDice());
+    }
+    // console.log(diceArr);
 
     return (
         <main>
             <div className="dice-wrapper">{diceElements}</div>
-            <button
-                className="roll-btn"
-                type="button"
-                onClick={rollDice}
-            >
+            <button className="roll-btn" type="button" onClick={rollDice}>
                 Roll
             </button>
         </main>
