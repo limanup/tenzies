@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Die from "./components/Die";
 
 function App() {
@@ -12,21 +12,16 @@ function App() {
         return diceArr;
     }
 
-    console.log(allNewDice())
+    const [diceArr, setDiceArr] = useState(allNewDice())
+    // console.log(diceArr)
+
+    const diceElements = diceArr.map((die) => (<Die value={die} />))
+    // console.log(diceElements)
 
     return (
         <main>
             <div className="dice-wrapper">
-                <Die value={1} />
-                <Die value={2} />
-                <Die value={3} />
-                <Die value={4} />
-                <Die value={5} />
-                <Die value={6} />
-                <Die value={1} />
-                <Die value={2} />
-                <Die value={3} />
-                <Die value={4} />
+              {diceElements}
             </div>
         </main>
     );
