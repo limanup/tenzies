@@ -10,7 +10,7 @@ interface Die {
 
 function App() {
     const [diceArr, setDiceArr] = useState(allNewDice());
-    // console.log(diceArr)
+
     const diceElements = diceArr.map((die) => (
         <Die
             value={die.value}
@@ -19,24 +19,33 @@ function App() {
             toggleHold={() => holdDice(die.id)}
         />
     ));
-    // console.log(diceElements)
+
+    function generateRandomDie(): Die {
+        return {
+            id: nanoid(),
+            value: Math.ceil(Math.random() * 6),
+            isHeld: false,
+        }
+    }
 
     function allNewDice() {
         let diceArr: Die[] = [];
 
         for (let i: number = 0; i < 10; i++) {
-            diceArr.push({
-                value: Math.ceil(Math.random() * 6),
-                isHeld: false,
-                id: nanoid(),
-            });
+            diceArr.push(generateRandomDie());
         }
 
         return diceArr;
     }
 
     function rollDice() {
-        setDiceArr(allNewDice());
+        setDiceArr((oldDice) =>
+            oldDice.map((oldDie) =>
+                oldDie.isHeld
+                    ? oldDie
+                    : generateRandomDie()
+            )
+        );
     }
 
     function holdDice(id: string) {
@@ -49,10 +58,10 @@ function App() {
         );
     }
 
-    // console.log(diceArr);
-
     return (
         <main>
+            <h1 className="title">Tenzies</h1>
+            <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
             <div className="dice-wrapper">{diceElements}</div>
             <button className="roll-btn" type="button" onClick={rollDice}>
                 Roll

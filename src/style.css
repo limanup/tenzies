@@ -11,24 +11,25 @@ body {
 
 main {
   max-width: 320px;
-  height: 320px;
+  min-height: 320px;
   background-color: #F5F5F5;
   border-radius: 10px;
   margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .dice-wrapper {
-  width: 250.88px;
-  height: 90.24px;
+  max-width: 100%;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  /* grid-template-columns: repeat(5, 1fr); */
+  /* grid-template: auto auto / repeat(5, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
   align-items: center;
   grid-gap: 18px;
-  margin-bottom: 30px;
+  margin: 20px;
 }
 
 .die {
@@ -59,6 +60,7 @@ main {
   box-shadow: 0px 3.2px 7.68px rgba(0, 0, 0, 0.18);
   border-radius: 3.81277px;
   cursor: pointer;
+  margin: 20px;
 }
 
 .roll-btn:focus {
@@ -71,4 +73,26 @@ main {
 
 .isHeld-true {
   background: #59E391;
+}
+
+.title {
+  margin: 20px;
+  font-size: 30px;
+  line-height: 30px;
+  letter-spacing: -0.03em;
+  color: #2B283A;
+}
+
+.instructions {
+  max-width: 80%;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 13.1072px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.03em;
+  color: #4A4E74;
+  margin: 0;
 }
