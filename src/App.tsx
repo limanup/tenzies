@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import Die from "./components/Die";
 import { nanoid } from "nanoid";
-import { domainToUnicode } from "url";
+
+interface Die {
+    value: number;
+    isHeld: boolean;
+    id: string;
+}
 
 function App() {
     const [diceArr, setDiceArr] = useState(allNewDice());
@@ -17,7 +22,7 @@ function App() {
     // console.log(diceElements)
 
     function allNewDice() {
-        let diceArr: { value: number; isHeld: boolean; id: string }[] = [];
+        let diceArr: Die[] = [];
 
         for (let i: number = 0; i < 10; i++) {
             diceArr.push({
@@ -35,7 +40,13 @@ function App() {
     }
 
     function holdDice(id: string) {
-        console.log(id)
+        setDiceArr((oldDice) =>
+            oldDice.map((oldDie) =>
+                oldDie.id === id
+                    ? { ...oldDie, isHeld: !oldDie.isHeld }
+                    : oldDie
+            )
+        );
     }
 
     // console.log(diceArr);
