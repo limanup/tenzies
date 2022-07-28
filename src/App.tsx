@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Die from "./components/Die";
 import {nanoid} from "nanoid";
+import { domainToUnicode } from "url";
 
 function App() {
     const [diceArr, setDiceArr] = useState(allNewDice());
     // console.log(diceArr)
     const diceElements = diceArr.map((die) => (
-        <Die value={die.value} key={die.id} />
+        <Die value={die.value} key={die.id} isHeld={die.isHeld} />
     ));
     // console.log(diceElements)
 
