@@ -13,7 +13,14 @@ function App() {
     const [tenzies, setTenzies] = useState(false)
 
     useEffect(() => {
-        console.log(diceArr)
+        const diceValue: number = diceArr[0].value
+        for (let i: number = 0; i < diceArr.length; i++) {
+            if (!diceArr[i].isHeld || diceArr[i].value !== diceValue) {
+                return
+            } 
+        }
+        setTenzies(true)
+        console.log("You won!")
     }, [diceArr])
 
     const diceElements = diceArr.map((die) => (
