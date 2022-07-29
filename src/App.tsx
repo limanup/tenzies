@@ -17,7 +17,6 @@ function App() {
         const winValue: number = diceArr[0].value;
         if (diceArr.every((die) => die.isHeld && die.value === winValue)) {
             setTenzies(true);
-            console.log("You won!");
         }
     }, [diceArr]);
 
@@ -49,11 +48,16 @@ function App() {
     }
 
     function rollDice() {
-        setDiceArr((oldDice) =>
-            oldDice.map((oldDie) =>
-                oldDie.isHeld ? oldDie : generateRandomDie()
-            )
-        );
+        if (tenzies) {
+            setDiceArr(allNewDice());
+            setTenzies(false);
+        } else {
+            setDiceArr((oldDice) =>
+                oldDice.map((oldDie) =>
+                    oldDie.isHeld ? oldDie : generateRandomDie()
+                )
+            );
+        }
     }
 
     function holdDice(id: string) {
