@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Die from "./components/Die";
 import { nanoid } from "nanoid";
 
@@ -10,6 +10,11 @@ interface Die {
 
 function App() {
     const [diceArr, setDiceArr] = useState(allNewDice());
+    const [tenzies, setTenzies] = useState(false)
+
+    useEffect(() => {
+        console.log(diceArr)
+    }, [diceArr])
 
     const diceElements = diceArr.map((die) => (
         <Die
