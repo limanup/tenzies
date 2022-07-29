@@ -63,6 +63,10 @@ main {
   margin: 20px;
 }
 
+.roll-btn:hover {
+  transform: scale(1.2);
+}
+
 .roll-btn:focus {
   outline: none;
 }
@@ -73,6 +77,7 @@ main {
 
 .isHeld-true {
   background: #59E391;
+  outline: solid;
 }
 
 .title {
