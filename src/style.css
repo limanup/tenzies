@@ -54,7 +54,7 @@ main {
   /* align-items: center; */
   /* text-align: center; */
   color: #FFFFFF;
-  width: 92.16px;
+  min-width: 100px;
   height: 35.84px;
   background: #5035FF;
   box-shadow: 0px 3.2px 7.68px rgba(0, 0, 0, 0.18);
