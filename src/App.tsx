@@ -97,12 +97,27 @@ function App() {
             {tenzies && (
                 <div className="win-msg">
                     <h1>You won!</h1>
-                    <p>You rolled {rollCount} times. </p>
-                    <p>You used {totalTimeUsed} seconds.</p>
                     <p>
-                        {totalTimeUsed > localBestTime
-                            ? `Best record is ${localBestTime} seconds.`
-                            : "You made a new record!"}
+                        You rolled{" "}
+                        <span style={{ color: "red" }}>{rollCount}</span> times.{" "}
+                    </p>
+                    <p>
+                        You used{" "}
+                        <span style={{ color: "red" }}>{totalTimeUsed}</span>{" "}
+                        seconds.
+                    </p>
+                    <p>
+                        {totalTimeUsed > localBestTime ? (
+                            <span>
+                                Best record is{" "}
+                                <span style={{ color: "green" }}>
+                                    {localBestTime}
+                                </span>{" "}
+                                seconds.
+                            </span>
+                        ) : (
+                            "You made a new record!"
+                        )}
                     </p>
                 </div>
             )}
