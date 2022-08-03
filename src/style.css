@@ -160,21 +160,18 @@ main {
 }
 
 .win-msg {
-    max-width: 80%;
-    margin: 0;
-    text-align: center;
-    min-height: 50px;
-    font-size: 13.1072px;
-    font-family: "Inter";
-    color: #4a4e74;
+  max-width: 80%;
+  margin: 0;
+  text-align: center;
+  min-height: 50px;
+  font-size: 13.1072px;
 }
 
 .win-msg > h1 {
-    font-size: 25px;
-    font-family: "Karla";
-    margin: 0;
+  font-size: 25px;
+  margin: 0;
 }
 
 .win-msg > p {
-    margin: 0;
+  margin: 0;
 }

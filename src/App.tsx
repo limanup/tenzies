@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Die from "./components/Die";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
-import Register from "./pages/Register"
 
 interface Die {
     value: number;
@@ -92,38 +91,18 @@ function App() {
     }
 
     return (
-        <main><Register /></main>
-        
-    )
-
-    return (
         <main>
             {tenzies && <Confetti />}
             <h1 className="title">Tenzies</h1>
             {tenzies && (
                 <div className="win-msg">
                     <h1>You won!</h1>
+                    <p>You rolled {rollCount} times. </p>
+                    <p>You used {totalTimeUsed} seconds.</p>
                     <p>
-                        You rolled{" "}
-                        <span style={{ color: "red" }}>{rollCount}</span> times.{" "}
-                    </p>
-                    <p>
-                        You used{" "}
-                        <span style={{ color: "red" }}>{totalTimeUsed}</span>{" "}
-                        seconds.
-                    </p>
-                    <p>
-                        {totalTimeUsed > localBestTime ? (
-                            <span>
-                                Best record is{" "}
-                                <span style={{ color: "green" }}>
-                                    {localBestTime}
-                                </span>{" "}
-                                seconds.
-                            </span>
-                        ) : (
-                            "You made a new record!"
-                        )}
+                        {totalTimeUsed > localBestTime
+                            ? `Best record is ${localBestTime} seconds.`
+                            : "You made a new record!"}
                     </p>
                 </div>
             )}
