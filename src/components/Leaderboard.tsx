@@ -28,8 +28,8 @@ const Leaderboard = () => {
     };
 
     return (
-        <div className="table-wrapper">
-            <Table striped bordered hover variant="dark">
+        <main className="table-wrapper">
+            <Table bordered striped hover>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -37,10 +37,17 @@ const Leaderboard = () => {
                         <th>Roll count</th>
                         <th>Total time used (seconds)</th>
                     </tr>
+                    <tr>
+                        <td>{1}</td>
+                        <td>test</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+
                 </thead>
                 <tbody>{DataTable()}</tbody>
             </Table>
-        </div>
+        </main>
     );
 };
 

@@ -20,8 +20,9 @@ a {
 
 a:hover {
     cursor: pointer;
+    color: white;
     text-decoration: underline;
-    text-decoration-color: white;;
+    text-decoration-color: white;
 }
 
 .navbar {
@@ -209,7 +210,7 @@ main {
 }
 
 form {
-    font-family: 'Inter';
+    font-family: "Inter";
     padding: 10px;
     display: flex;
     justify-content: center;
@@ -222,7 +223,7 @@ form {
     font-size: 15px;
     border-radius: 5px;
     border: 1px solid gray;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
 }
 
 .form-submit {
@@ -231,11 +232,36 @@ form {
     border-radius: 5px;
     color: white;
     background-color: #5035ff;
-    border: none;   
-    cursor: pointer; 
+    border: none;
+    cursor: pointer;
     align-self: center;
 }
 
-.wrapper {
-    padding-top: 30px;
+.table-wrapper {
+    max-width: 320px;
+    padding: 20px;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+table td,
+th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table tr:nth-child(even) {
+    background-color: white;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+table th {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: #0b2434;
+    color: white;
 }
