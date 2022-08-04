@@ -16,6 +16,7 @@ let dbConfig = require("./database/db");
 const recordRoute = require("../backend/routes/record.route");
 
 // Configure mongoDB Database
+// no need to configure as we are using mondodb v6
 // mongoose.set("useNewUrlParser", true);
 // mongoose.set("useFindAndModify", false);
 // mongoose.set("useCreateIndex", true);

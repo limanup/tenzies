@@ -5,10 +5,10 @@
 
 let mongoose = require("mongoose"),
     express = require("express"),
-    router = express.Router();
+    app = express();
 
 // record Model
-let recordSchema = require("../Models/Record");
+let RecordModel = require("../Models/Record");
 
 // Router().post('/leaderboard', (req, res, next) => {
 //     console.log(req)
@@ -16,32 +16,40 @@ let recordSchema = require("../Models/Record");
 //     console.log(next)
 // })
 
-// Add record
-router.post("/", (req, res, next) => {
-    console.log("post sucess");
-    recordSchema.create(req.body, (error, data) => {
+// get best record
+app.get("/bestrecord", (req, res, next) => {
+    RecordModel.findOne((error, data) => {
         if (error) {
             return next(error);
         } else {
-            console.log(data);
+            res.json(data);
+        }
+        // only 1 best record
+    }).sort({ totalTimeUsed: 1 });
+});
+
+// Add record
+app.post("/", (req, res, next) => {
+    RecordModel.create(req.body, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
             res.json(data);
         }
     });
 });
 
 // Read record
-router.get("/", (req, res) => {
-    console.log("get success");
-    recordSchema
-        .find((error, data) => {
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data);
-            }
-        })
-        .sort({ totalTimeUsed: 1 });
+app.get("/", (req, res, next) => {
+    RecordModel.find((error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data);
+        }
+        // sort table by total time used asec
+    }).sort({ totalTimeUsed: 1 });
 });
 
-// export default router;
-module.exports = router;
+// export default app;
+module.exports = app;

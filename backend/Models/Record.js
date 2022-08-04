@@ -7,6 +7,8 @@ const recordSchema = new Schema(
         name: {
             type: String,
             required: true,
+            index: true,
+            unique: true
         },
         rollCount: {
             type: Number,
@@ -22,6 +24,6 @@ const recordSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model("Record", recordSchema);
+module.exports = mongoose.model("RecordModel", recordSchema);
 // const RecordModel = mongoose.model('Record', recordSchema)
 // export {recordSchema, RecordModel}

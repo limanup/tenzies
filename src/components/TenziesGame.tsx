@@ -113,22 +113,27 @@ const TenziesGame = () => {
     }
 
     // save record to leaderboard
-    function saveRecord(e: React.MouseEvent<HTMLButtonElement>) {
+    async function saveRecord(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
 
         if (!record.name) {
             alert("Must enter pseudo name to save record");
             return;
         } else {
-            axios
+            await axios
                 .post("http://localhost:4000/leaderboard", record)
                 .then((res) => {
                     if (res.status === 200) {
+                        console.log('record added')
                     } else {
+                        console.log('promise reject')
                         Promise.reject();
                     }
                 })
-                .catch((err) => console.log("catch error"));
+                .catch((err) => {
+                    console.log(err);
+                    return;
+                });
 
             // start fresh after win
             rollDice();
@@ -142,7 +147,7 @@ const TenziesGame = () => {
         <main>
             {tenzies && <Confetti />}
             <h1 className="title">Tenzies</h1>
-            {tenzies && (
+            {!tenzies && (
                 <div>
                     <div className="win-msg">
                         <h1>You won!</h1>
