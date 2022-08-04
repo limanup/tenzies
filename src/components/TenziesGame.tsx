@@ -3,6 +3,7 @@ import Die from "./Die";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface Die {
     value: number;
@@ -11,6 +12,7 @@ interface Die {
 }
 
 const TenziesGame = () => {
+    const navigate = useNavigate();
     const [diceArr, setDiceArr] = useState(allNewDice());
     const [tenzies, setTenzies] = useState(false);
     const [rollCount, setRollCount] = useState(0);
@@ -113,20 +115,27 @@ const TenziesGame = () => {
     // save record to leaderboard
     function saveRecord(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
-        console.log(record);
-        axios
-            .post("http://localhost:3000/leaderboard", record)
-            .then((res) => {
-                if (res.status === 200) {
-                    console.log("Record saved");
-                } else {
-                    Promise.reject();
-                }
-            })
-            .catch((err) => console.log(err));
 
-        // start fresh after win
-        rollDice();
+        if (!record.name) {
+            alert("Must enter pseudo name to save record");
+            return;
+        } else {
+            axios
+                .post("http://localhost:4000/leaderboard", record)
+                .then((res) => {
+                    if (res.status === 200) {
+                    } else {
+                        Promise.reject();
+                    }
+                })
+                .catch((err) => console.log("catch error"));
+
+            // start fresh after win
+            rollDice();
+
+            // go to leaderboard page
+            navigate("/leaderboard");
+        }
     }
 
     return (

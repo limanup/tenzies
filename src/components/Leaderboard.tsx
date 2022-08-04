@@ -14,7 +14,7 @@ const Leaderboard = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:3000/leaderboard")
+            .get("http://localhost:4000/leaderboard")
             .then(({ data }) => {
                 setRecordList(data);
             })
@@ -23,7 +23,7 @@ const Leaderboard = () => {
 
     const DataTable = () => {
         return recordList.map((res, i) => {
-            return <RecordTableRow obj={res} key={i} row={i} />;
+            return <RecordTableRow obj={res} key={i} row={i + 1} />;
         });
     };
 
@@ -37,12 +37,12 @@ const Leaderboard = () => {
                         <th>Roll count</th>
                         <th>Total time used (seconds)</th>
                     </tr>
-                    <tr>
+                    {/* <tr>
                         <td>{1}</td>
                         <td>test</td>
                         <td>1</td>
                         <td>1</td>
-                    </tr>
+                    </tr> */}
 
                 </thead>
                 <tbody>{DataTable()}</tbody>
