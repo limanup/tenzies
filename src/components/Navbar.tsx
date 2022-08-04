@@ -1,4 +1,6 @@
 import { BrowserRouter, Link } from "react-router-dom";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
 
 const Navbar = () => {
     return (
@@ -9,10 +11,10 @@ const Navbar = () => {
                 </Link>
                 <div className="navbar">
                     <nav>
-                        <Link to="/register">Register</Link>
+                        <LoginButton />
                     </nav>
                     <nav>
-                        <Link to="/login">Log in</Link>
+                        <LogoutButton />
                     </nav>
                     <nav>
                         <Link to="/leaderboard">Leader board</Link>

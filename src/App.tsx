@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import Die from "./components/Die";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
-import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
-
 
 interface Die {
     value: number;
@@ -95,10 +93,10 @@ function App() {
 
     return (
         <>
-            <Navbar />
-            <main>
-                <Register />
-            </main>
+            <div>
+                <Navbar />
+                <main></main>
+            </div>
         </>
     );
 

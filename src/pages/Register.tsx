@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import axios from "../api/axios";
+import React, { useState } from "react";
+// import axios from "../api/axios";
 
 const REGISTER_URL = "/register";
+
 const Register = () => {
     const [user, setUser] = useState({
         username: "",
@@ -28,15 +29,16 @@ const Register = () => {
             return;
         }
 
-        axios
-            .post(REGISTER_URL, user)
-            .then((res) => {
-                if (res.status === 200) {
-                    alert("success");
-                    console.log(res.data);
-                } else Promise.reject();
-            })
-            .catch((err) => console.log(err));
+        // axios
+        //     .post(REGISTER_URL, user)
+        //     .then((res) => {
+        //         console.log(res)
+        //         if (res.status === 200) {
+        //             alert("success");
+        //             console.log(res.data);
+        //         } else Promise.reject();
+        //     })
+        //     .catch((err) => console.log(err));
     };
 
     return (
