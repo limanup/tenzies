@@ -18,14 +18,26 @@ const TenziesGame = () => {
     const [rollCount, setRollCount] = useState(0);
     const [startTime, setStartTime] = useState(Date.now());
     const [totalTimeUsed, setTotalTimeUsed] = useState(0);
-    const [localBestTime, setLocalBestTime] = useState(() =>
-        parseFloat(localStorage.getItem("tenzies") || "0")
-    );
+    const [bestRecord, setBestRecord] = useState(0);
     const [record, setRecord] = useState({
         name: "",
         rollCount: 0,
         totalTimeUsed: 0,
     });
+
+    // get best record from database
+    useEffect(() => {
+        const getBestRecord = async () => {
+            await fetch("http://localhost:4000/leaderboard/bestrecord")
+                .then((res) => res.json())
+                .then((data) => {
+                    setBestRecord(data?.totalTimeUsed || 0)
+                })
+                .catch((error) => console.log("Error: ", error));
+        };
+        getBestRecord()
+    }, []);
+
 
     // check win conditions
     useEffect(() => {
@@ -36,14 +48,14 @@ const TenziesGame = () => {
         }
     }, [diceArr]);
 
-    // update local storage for new record after a tenzie win
+    // update new record after a tenzie win
     useEffect(() => {
         if (
             totalTimeUsed > 0 &&
-            (totalTimeUsed < localBestTime || localBestTime <= 0)
+            (totalTimeUsed < bestRecord || bestRecord <= 0)
         ) {
-            setLocalBestTime(totalTimeUsed);
-            localStorage.setItem("tenzies", JSON.stringify(totalTimeUsed));
+            setBestRecord(totalTimeUsed);
+            // localStorage.setItem("tenzies", JSON.stringify(totalTimeUsed));
         }
     }, [tenzies]);
 
@@ -119,14 +131,17 @@ const TenziesGame = () => {
         if (!record.name) {
             alert("Must enter pseudo name to save record");
             return;
+        } else if (record.totalTimeUsed === 0) {
+            alert("Something went wrong, please refresh the page.");
+            return;
         } else {
             await axios
                 .post("http://localhost:4000/leaderboard", record)
                 .then((res) => {
                     if (res.status === 200) {
-                        console.log('record added')
+                        console.log("record added");
                     } else {
-                        console.log('promise reject')
+                        console.log("promise reject");
                         Promise.reject();
                     }
                 })
@@ -164,11 +179,11 @@ const TenziesGame = () => {
                             seconds.
                         </p>
                         <p>
-                            {totalTimeUsed > localBestTime ? (
+                            {totalTimeUsed > bestRecord ? (
                                 <span>
                                     Best record is{" "}
                                     <span style={{ color: "green" }}>
-                                        {localBestTime}
+                                        {bestRecord}
                                     </span>{" "}
                                     seconds.
                                 </span>
