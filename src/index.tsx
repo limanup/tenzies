@@ -3,23 +3,16 @@ import ReactDOM from "react-dom/client";
 import "./style.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { Auth0Provider } from "@auth0/auth0-react";
-
-const domain: string = process.env.REACT_APP_AUTH0_DOMAIN || "";
-const clientId: string = process.env.REACT_APP_AUTH0_CLIENT_ID || "";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
 );
 root.render(
     <React.StrictMode>
-        <Auth0Provider
-            domain='dev-710lv8gb.us.auth0.com'
-            clientId='TmK5uUORG1Cmme2N6ZEUamqiomfYur1U'
-            redirectUri={window.location.origin}
-        >
+        <BrowserRouter>
             <App />
-        </Auth0Provider>
+        </BrowserRouter>
     </React.StrictMode>
 );
 
