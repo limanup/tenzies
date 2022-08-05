@@ -32,8 +32,10 @@ app.get("/bestrecord", (req, res, next) => {
 app.post("/", (req, res, next) => {
     RecordModel.create(req.body, (error, data) => {
         if (error) {
+            console.log(error)
             return next(error);
         } else {
+            console.log(data)
             res.json(data);
         }
     });

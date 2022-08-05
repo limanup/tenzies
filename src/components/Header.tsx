@@ -6,7 +6,7 @@ const Header = () => {
             <Link to="/">
                 <h1>Tenzies Game!</h1>
             </Link>
-            <div className="navbar">
+            <div className="Header">
                 <nav>
                     <Link to="/leaderboard"><h2>Leaderboard</h2></Link>
                 </nav>

@@ -4,6 +4,8 @@ import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import BestRecord from "./BestRecord";
+
 
 interface Die {
     value: number;
@@ -14,29 +16,17 @@ interface Die {
 const TenziesGame = () => {
     const navigate = useNavigate();
     const [diceArr, setDiceArr] = useState(allNewDice());
-    const [tenzies, setTenzies] = useState(false);
     const [rollCount, setRollCount] = useState(0);
+    const [tenzies, setTenzies] = useState(false);
     const [startTime, setStartTime] = useState(Date.now());
-    const [totalTimeUsed, setTotalTimeUsed] = useState(0);
-    const [bestRecord, setBestRecord] = useState(0);
+    const [totalTimeUsed, setTotalTimeUsed] = useState(10);
+
+    const [bestRecord, setBestRecord] = useState()
     const [record, setRecord] = useState({
         name: "",
         rollCount: 0,
         totalTimeUsed: 0,
     });
-
-    // get best record from database
-    useEffect(() => {
-        const getBestRecord = async () => {
-            await fetch("http://localhost:4000/leaderboard/bestrecord")
-                .then((res) => res.json())
-                .then((data) => {
-                    setBestRecord(data?.totalTimeUsed || 0)
-                })
-                .catch((error) => console.log("Error: ", error));
-        };
-        getBestRecord()
-    }, []);
 
 
     // check win conditions
@@ -44,9 +34,22 @@ const TenziesGame = () => {
         const winValue: number = diceArr[0].value;
         if (diceArr.every((die) => die.isHeld && die.value === winValue)) {
             setTenzies(true);
-            setTotalTimeUsed((Date.now() - startTime) / 1000);
+
+            const timeUsed = (Date.now() - startTime) / 1000
+            setTotalTimeUsed(timeUsed);
+            
+            const getBestRecord = async () => {
+                await fetch("http://localhost:4000/leaderboard/bestrecord")
+                    .then((res) => res.json())
+                    .then((data) => {
+                        setBestRecord(data?.totalTimeUsed || 0);
+                    })
+                    .catch((error) => console.log("Error: ", error));
+            };
+            getBestRecord().then(setBestRecord);
+
         }
-    }, [diceArr]);
+    }, [diceArr, bestRecord]);
 
     // update new record after a tenzie win
     useEffect(() => {
@@ -110,11 +113,21 @@ const TenziesGame = () => {
                 )
             );
             setRollCount((prevCount) => prevCount + 1);
+
+            // have we won game yet?
         }
     }
 
     // hold dice
     function holdDice(id: string) {
+
+        // update hold map
+        heldDice[id] = true
+
+
+        // re-roll dice
+        // 
+
         setDiceArr((oldDice) =>
             oldDice.map((oldDie) =>
                 oldDie.id === id
@@ -135,20 +148,46 @@ const TenziesGame = () => {
             alert("Something went wrong, please refresh the page.");
             return;
         } else {
-            await axios
-                .post("http://localhost:4000/leaderboard", record)
-                .then((res) => {
-                    if (res.status === 200) {
-                        console.log("record added");
-                    } else {
-                        console.log("promise reject");
-                        Promise.reject();
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                    return;
-                });
+            const res = await fetch("http://localhost:4000/leaderboard", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(record),
+            })
+            if (res.status === 200) {
+                console.log("Record added.")
+            } else {
+                alert()
+                return
+            }
+                // .then((res) => {
+                //     if (res.status === 200) {
+                //         console.log("Record added.");
+                //     } else {
+                //         console.log("Promise rejected.");
+                //         Promise.reject();
+                //         return;
+                //     }
+                // })
+                // .catch((err) => {
+                //     console.log(err);
+                //     return;
+                // });
+
+
+            // await axios
+            //     .post("http://localhost:4000/leaderboard", record)
+            //     .then((res) => {
+            //         if (res.status === 200) {
+            //             console.log("record added");
+            //         } else {
+            //             console.log("promise reject");
+            //             Promise.reject();
+            //         }
+            //     })
+            //     .catch((err) => {
+            //         console.log(err);
+            //         return;
+            //     });
 
             // start fresh after win
             rollDice();
@@ -162,7 +201,7 @@ const TenziesGame = () => {
         <main>
             {tenzies && <Confetti />}
             <h1 className="title">Tenzies</h1>
-            {!tenzies && (
+            {tenzies && (
                 <div>
                     <div className="win-msg">
                         <h1>You won!</h1>
@@ -180,13 +219,7 @@ const TenziesGame = () => {
                         </p>
                         <p>
                             {totalTimeUsed > bestRecord ? (
-                                <span>
-                                    Best record is{" "}
-                                    <span style={{ color: "green" }}>
-                                        {bestRecord}
-                                    </span>{" "}
-                                    seconds.
-                                </span>
+                                <BestRecord />
                             ) : (
                                 "You made a new record!"
                             )}
