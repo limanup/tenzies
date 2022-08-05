@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext, useContext } from "react";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import BestRecord from "./BestRecord";
 import Dice from "./Dice";
+import WinResults from "./WinResults";
+import {WinContext} from "../constants/Constants"
 
 interface Die {
     value: number;
@@ -23,6 +25,7 @@ const TenziesGame = () => {
     const [totalTimeUsed, setTotalTimeUsed] = useState(10);
 
     const [bestRecord, setBestRecord] = useState();
+
 
     // check win conditions on every Die update
     useEffect(() => {
@@ -109,7 +112,20 @@ const TenziesGame = () => {
         <main>
             {win && <Confetti />}
             <h1 className="title">Tenzies</h1>
-            {win && (
+
+            {!win && (
+                <WinContext.Provider
+                    value={{
+                        rollCount: rollCount,
+                        totalTimeUsed: totalTimeUsed,
+                        resetGame: resetGame
+                    }}
+                >
+                    <WinResults />
+                </WinContext.Provider>
+            )}
+
+            {!win && (
                 <div>
                     <div className="win-msg">
                         <h1>You won!</h1>
@@ -126,7 +142,7 @@ const TenziesGame = () => {
                             seconds.
                         </p>
 
-                        <BestRecord totalTimeUsed={totalTimeUsed} />
+                        {/* <BestRecord totalTimeUsed={totalTimeUsed} /> */}
                     </div>
                 </div>
             )}

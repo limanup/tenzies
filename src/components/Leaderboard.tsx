@@ -29,6 +29,7 @@ const Leaderboard = () => {
 
     return (
         <main className="table-wrapper">
+            <div className="table-wrapper">
             <Table bordered striped hover>
                 <thead>
                     <tr>
@@ -47,6 +48,7 @@ const Leaderboard = () => {
                 </thead>
                 <tbody>{DataTable()}</tbody>
             </Table>
+            </div>
         </main>
     );
 };

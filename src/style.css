@@ -238,16 +238,24 @@ form {
 }
 
 .table-wrapper {
-    max-width: 320px;
-    padding: 20px;
-    text-align: center;
-    border-collapse: collapse;
+    display: table;
+    max-width: 100%;
 }
-
 table td,
 th {
+    max-width: 100px;
     border: 1px solid #ddd;
     padding: 8px;
+    border-collapse: collapse;
+    overflow-wrap: break-word;
+}
+
+table th:first-child{
+    border-radius: 10px 0 0 0;
+}
+
+table th:last-child{
+    border-radius: 0 10px 0 0;
 }
 
 table tr:nth-child(even) {

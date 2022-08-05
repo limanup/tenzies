@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { BestRecordURL } from "../constants/Constants";
+import { useState, useEffect, useContext } from "react";
+import { BestRecordURL, WinContext } from "../constants/Constants";
 
 // get best record from database
 const useBestRecordQuery = () => {
@@ -20,21 +20,20 @@ const useBestRecordQuery = () => {
     return bestRecord;
 };
 
-function BestRecord(totalTimeUsed: number) {
+function BestRecord() {
     const bestRecord = useBestRecordQuery();
+    const totalTimeUsed = useContext(WinContext).totalTimeUsed;
     return (
         <p>
-            {totalTimeUsed > bestRecord} ?{" "}
-            {bestRecord === 0 ? (
-                <span>Loading...</span>
-            ) : (
-                <span>
-                    Best record is{" "}
-                    <span style={{ color: "green" }}>{bestRecord}</span>{" "}
-                    seconds.
-                </span>
-            )}{" "}
-            : ( "You made a new record!" )
+            {totalTimeUsed > bestRecord
+                ? bestRecord > 0 && (
+                      <span>
+                          Best record is{" "}
+                          <span style={{ color: "green" }}>{bestRecord}</span>{" "}
+                          seconds.
+                      </span>
+                  )
+                : "You made a new record!"}
         </p>
     );
 }
