@@ -1,4 +1,4 @@
-const Die = ({
+const Dice = ({
     value,
     isHeld,
     toggleHold,
@@ -15,4 +15,4 @@ const Die = ({
     );
 };
 
-export default Die;
+export default Dice;
