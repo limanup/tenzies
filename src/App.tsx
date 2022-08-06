@@ -9,16 +9,14 @@ function App() {
     // check and set database connection status
     const [dbStatus, setDbStatus] = useState(true);
 
-    const [time, setTime] = useState(Date.now());
-
     return (
         <div>
             <DBConnectContext.Provider
                 value={{ dbStatus: dbStatus, setDbStatus: setDbStatus }}
             >
-                <Header onClickHomePage={() => setTime(Date.now())} />
+                <Header />
                 <Routes>
-                    <Route path="/" element={<TenziesGame timeNow={time} />} />
+                    <Route path="/" element={<TenziesGame />} />
                     <Route path="/leaderboard" element={<Leaderboard />} />
                 </Routes>
             </DBConnectContext.Provider>

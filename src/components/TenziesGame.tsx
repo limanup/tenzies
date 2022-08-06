@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-import { GameInstructions, GameName, GameContext } from "../constants/Constants";
+import {
+    GameInstructions,
+    GameName,
+    GameContext,
+} from "../constants/Constants";
 import Confetti from "react-confetti";
 import Dice from "./Dice";
 import WinResults from "./WinResults";
@@ -11,7 +15,7 @@ interface Die {
     id: string;
 }
 
-const TenziesGame = ({timeNow}:{timeNow: number}) => {
+const TenziesGame = () => {
     // initiate diceList
     const [diceList, setDiceList] = useState(allNewDice());
 
@@ -41,10 +45,6 @@ const TenziesGame = ({timeNow}:{timeNow: number}) => {
             setTotalTimeUsed((Date.now() - startTime) / 1000);
         }
     }, [diceList]);
-
-    useEffect(() => {
-        resetGame()
-    }, [timeNow])
 
     /**
      * Functions
