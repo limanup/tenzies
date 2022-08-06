@@ -1,21 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Table } from "react-bootstrap";
+import {
+    DBConnectContext,
+    LeaderBoardURL,
+    NoDBConnection,
+} from "../constants/Constants";
 import RecordTableRow from "./RecordTableRow";
-
-// interface Record {
-//     name: string;
-//     rollCount: number;
-//     totalTimeUsed: number;
-// }
 
 const Leaderboard = () => {
     const [recordList, setRecordList] = useState([]);
 
+    // check and set database connection status
+    const { dbStatus, setDbStatus } = useContext(DBConnectContext);
+
     useEffect(() => {
         axios
-            .get("http://localhost:4000/leaderboard")
-            .then(({ data }) => {
+            .get(LeaderBoardURL)
+            .then(({ data, status }) => {
+                if (status === 200) {
+                    setDbStatus(true)
+                    console.log(dbStatus)
+                }
                 setRecordList(data);
             })
             .catch((err) => console.log(err));
@@ -29,7 +35,6 @@ const Leaderboard = () => {
 
     return (
         <main className="table-wrapper">
-            <div className="table-wrapper">
             <Table bordered striped hover>
                 <thead>
                     <tr>
@@ -38,17 +43,10 @@ const Leaderboard = () => {
                         <th>Roll count</th>
                         <th>Total time used (seconds)</th>
                     </tr>
-                    {/* <tr>
-                        <td>{1}</td>
-                        <td>test</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr> */}
-
                 </thead>
                 <tbody>{DataTable()}</tbody>
             </Table>
-            </div>
+            {!dbStatus && <label className="status-msg">{NoDBConnection}</label>}
         </main>
     );
 };

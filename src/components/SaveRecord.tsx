@@ -1,22 +1,27 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LeaderBoardURL } from "../constants/Constants";
+import {
+    DBConnectContext,
+    LeaderBoardURL,
+    WinContext,
+} from "../constants/Constants";
 
-const SaveRecord = ({
-    rollCount,
-    totalTimeUsed,
-    resetGame,
-}: {
-    rollCount: number;
-    totalTimeUsed: number;
-    resetGame: any
-}) => {
+const SaveRecord = () => {
+    // get data from useContext
+    const { rollCount, totalTimeUsed, resetGame } = useContext(WinContext);
+
+    // check database connection status
+    const { dbStatus } = useContext(DBConnectContext);
+
+    // compose record for adding to database
     const [record, setRecord] = useState({
         name: "",
-        rollCount: 0,
-        totalTimeUsed: 0,
+        rollCount: rollCount,
+        totalTimeUsed: totalTimeUsed,
     });
+    console.log(record);
 
+    // display status message
     const [status, setStatus] = useState("");
     const navigate = useNavigate();
 
@@ -38,10 +43,12 @@ const SaveRecord = ({
             });
             if (res.status === 200) {
                 setStatus("Record added.");
-                console.log("reset game")
-                resetGame
+                // resetGame;
                 // go to leaderboard page
                 // navigate("/leaderboard");
+            } else if (dbStatus && res.status === 500) {
+                setStatus("Duplicate pseudo name, please choose another name.");
+                return;
             } else {
                 setStatus("Record not added.");
                 return;
@@ -82,12 +89,12 @@ const SaveRecord = ({
             //         console.log(err);
             //         return;
             //     });
-
         }
     }
 
     return (
         <div>
+            <label className="status-msg">{status}</label>
             <form>
                 <input
                     className="form-input"
@@ -100,8 +107,6 @@ const SaveRecord = ({
                         setRecord((oldRecord) => ({
                             ...oldRecord,
                             name: e.target.value,
-                            rollCount: rollCount,
-                            totalTimeUsed: totalTimeUsed,
                         }))
                     }
                 />
@@ -109,7 +114,6 @@ const SaveRecord = ({
                     Save my record
                 </button>
             </form>
-            <label>{status}</label>
         </div>
     );
 };

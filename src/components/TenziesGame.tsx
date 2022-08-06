@@ -1,12 +1,14 @@
-import React, { useEffect, useState, createContext, useContext } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
+import {
+    DBConnectContext,
+    GameInstructions,
+    GameName,
+    WinContext,
+} from "../constants/Constants";
 import Confetti from "react-confetti";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import BestRecord from "./BestRecord";
 import Dice from "./Dice";
 import WinResults from "./WinResults";
-import {WinContext} from "../constants/Constants"
 
 interface Die {
     value: number;
@@ -18,14 +20,23 @@ const TenziesGame = () => {
     // initiate diceList
     const [diceList, setDiceList] = useState(allNewDice());
 
+    const [dbStatus, setDbStatus] = useState(false);
+
     // win stats
     const [win, setWin] = useState(false);
     const [rollCount, setRollCount] = useState(0);
     const [startTime, setStartTime] = useState(Date.now());
     const [totalTimeUsed, setTotalTimeUsed] = useState(10);
 
-    const [bestRecord, setBestRecord] = useState();
-
+    // map each die to Die component
+    const diceElements = diceList.map((die) => (
+        <Dice
+            value={die.value}
+            key={die.id}
+            isHeld={die.isHeld}
+            toggleHold={() => holdDice(die.id)}
+        />
+    ));
 
     // check win conditions on every Die update
     useEffect(() => {
@@ -38,26 +49,9 @@ const TenziesGame = () => {
         }
     }, [diceList]);
 
-    // // update new record after a tenzie win
-    // useEffect(() => {
-    //     if (
-    //         totalTimeUsed > 0 &&
-    //         (totalTimeUsed < bestRecord || bestRecord <= 0)
-    //     ) {
-    //         setBestRecord(totalTimeUsed);
-    //         // localStorage.setItem("tenzies", JSON.stringify(totalTimeUsed));
-    //     }
-    // }, [win]);
-
-    // map each die to Die component
-    const diceElements = diceList.map((die) => (
-        <Dice
-            value={die.value}
-            key={die.id}
-            isHeld={die.isHeld}
-            toggleHold={() => holdDice(die.id)}
-        />
-    ));
+    /**
+     * Functions
+     */
 
     // function to generate random number
     function generateRandomDie(): Die {
@@ -111,49 +105,27 @@ const TenziesGame = () => {
     return (
         <main>
             {win && <Confetti />}
-            <h1 className="title">Tenzies</h1>
+            <h1 className="title">{GameName}</h1>
 
             {!win && (
                 <WinContext.Provider
                     value={{
                         rollCount: rollCount,
                         totalTimeUsed: totalTimeUsed,
-                        resetGame: resetGame
+                        resetGame: resetGame,
                     }}
                 >
                     <WinResults />
                 </WinContext.Provider>
             )}
 
-            {!win && (
-                <div>
-                    <div className="win-msg">
-                        <h1>You won!</h1>
-                        <p>
-                            You rolled{" "}
-                            <span style={{ color: "red" }}>{rollCount}</span>{" "}
-                            times.{" "}
-                        </p>
-                        <p>
-                            You used{" "}
-                            <span style={{ color: "red" }}>
-                                {totalTimeUsed}
-                            </span>{" "}
-                            seconds.
-                        </p>
-
-                        {/* <BestRecord totalTimeUsed={totalTimeUsed} /> */}
-                    </div>
-                </div>
-            )}
-            {!win && (
-                <p className="instructions">
-                    Roll until all dice are the same. Click each die to freeze
-                    it at its current value between rolls.
-                </p>
-            )}
+            {!win && <p className="instructions">{GameInstructions}</p>}
             <div className="dice-wrapper">{diceElements}</div>
-            <button className="roll-btn" type="button" onClick={rollDice}>
+            <button
+                className="roll-btn"
+                type="button"
+                onClick={win ? resetGame : rollDice}
+            >
                 {win ? "New Game" : "Roll"}
             </button>
         </main>

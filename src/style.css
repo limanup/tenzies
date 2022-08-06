@@ -13,6 +13,22 @@ header {
     align-items: center;
 }
 
+body {
+    font-family: "Karla", sans-serif;
+    margin: 0;
+    background: #0b2434;
+    padding: 30px;
+}
+
+h1 {
+    font-size: 25px;
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
 a {
     text-decoration: none;
     color: white;
@@ -25,21 +41,14 @@ a:hover {
     text-decoration-color: white;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
 nav {
     margin: 20px;
 }
 
-body {
-    font-family: "Karla", sans-serif;
-    margin: 0;
-    background: #0b2434;
-    padding: 30px;
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 main {
@@ -193,20 +202,26 @@ main {
 }
 
 .win-msg {
-    max-width: 80%;
     margin: auto;
     text-align: center;
     min-height: 50px;
     font-size: 13.1072px;
 }
 
-.win-msg > h1 {
-    font-size: 25px;
-    margin: 0;
+.status-msg {
+    padding-inline: 10px;
+    display: inline-block;
+    max-width: 300px;
+    align-self: center;
+    color: red;
+    word-wrap: break-word;
+    animation: blinker 2s linear infinite;
 }
 
-.win-msg > p {
-    margin: 0;
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
 }
 
 form {
@@ -250,11 +265,11 @@ th {
     overflow-wrap: break-word;
 }
 
-table th:first-child{
+table th:first-child {
     border-radius: 10px 0 0 0;
 }
 
-table th:last-child{
+table th:last-child {
     border-radius: 0 10px 0 0;
 }
 

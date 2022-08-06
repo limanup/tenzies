@@ -1,9 +1,16 @@
 import { useState, useEffect, useContext } from "react";
-import { BestRecordURL, WinContext } from "../constants/Constants";
+import {
+    BestRecordURL,
+    DBConnectContext,
+    WinContext,
+} from "../constants/Constants";
 
 // get best record from database
 const useBestRecordQuery = () => {
     const [bestRecord, setBestRecord] = useState(0);
+
+    // set dabatase connection status
+    const { setDbStatus } = useContext(DBConnectContext);
 
     useEffect(() => {
         const getBestRecord = async () => {
@@ -11,6 +18,7 @@ const useBestRecordQuery = () => {
                 .then((res) => res.json())
                 .then((data) => {
                     setBestRecord(data?.totalTimeUsed || 0);
+                    setDbStatus(true);
                 })
                 .catch((error) => console.log("Error: ", error));
         };
@@ -22,7 +30,7 @@ const useBestRecordQuery = () => {
 
 function BestRecord() {
     const bestRecord = useBestRecordQuery();
-    const totalTimeUsed = useContext(WinContext).totalTimeUsed;
+    const { totalTimeUsed } = useContext(WinContext);
     return (
         <p>
             {totalTimeUsed > bestRecord

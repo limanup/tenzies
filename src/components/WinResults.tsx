@@ -1,12 +1,15 @@
 import { useContext } from "react";
-import { WinContext } from "../constants/Constants";
+import { DBConnectContext, NoDBConnection, WinContext } from "../constants/Constants";
 import BestRecord from "./BestRecord";
+import SaveRecord from "./SaveRecord";
 
 const WinResults = () => {
-    const props = useContext(WinContext);
-    const rollCount = props.rollCount;
-    const totalTimeUsed = props.totalTimeUsed;
-    const resetGame = props.resetGame;
+    // get data from useContext
+    const { rollCount, totalTimeUsed } = useContext(WinContext);
+
+    // check database connection
+    const { dbStatus } = useContext(DBConnectContext);
+
     return (
         <div className="win-msg">
             <h1>You won!</h1>
@@ -18,7 +21,20 @@ const WinResults = () => {
                 You used <span style={{ color: "red" }}>{totalTimeUsed}</span>{" "}
                 seconds.
             </p>
-            <BestRecord />
+            {dbStatus ? (
+                <div>
+                    <BestRecord />
+                    <br />
+                    <SaveRecord />
+                </div>
+            ) : (
+                <div>
+                    <br />
+                    <p className="status-msg">
+                        {NoDBConnection}
+                    </p>
+                </div>
+            )}
         </div>
     );
 };
