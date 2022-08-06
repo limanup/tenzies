@@ -256,9 +256,14 @@ form {
     display: table;
     max-width: 100%;
 }
+
+table {
+    max-width: 320px;
+}
+
 table td,
 th {
-    max-width: 100px;
+    /* max-width: 100px; */
     border: 1px solid #ddd;
     padding: 8px;
     border-collapse: collapse;

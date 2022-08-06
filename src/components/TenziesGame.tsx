@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-import {
-    DBConnectContext,
-    GameInstructions,
-    GameName,
-    WinContext,
-} from "../constants/Constants";
+import { GameInstructions, GameName, GameContext } from "../constants/Constants";
 import Confetti from "react-confetti";
 import Dice from "./Dice";
 import WinResults from "./WinResults";
@@ -16,11 +11,9 @@ interface Die {
     id: string;
 }
 
-const TenziesGame = () => {
+const TenziesGame = ({timeNow}:{timeNow: number}) => {
     // initiate diceList
     const [diceList, setDiceList] = useState(allNewDice());
-
-    const [dbStatus, setDbStatus] = useState(false);
 
     // win stats
     const [win, setWin] = useState(false);
@@ -48,6 +41,10 @@ const TenziesGame = () => {
             setTotalTimeUsed((Date.now() - startTime) / 1000);
         }
     }, [diceList]);
+
+    useEffect(() => {
+        resetGame()
+    }, [timeNow])
 
     /**
      * Functions
@@ -107,8 +104,8 @@ const TenziesGame = () => {
             {win && <Confetti />}
             <h1 className="title">{GameName}</h1>
 
-            {!win && (
-                <WinContext.Provider
+            {win && (
+                <GameContext.Provider
                     value={{
                         rollCount: rollCount,
                         totalTimeUsed: totalTimeUsed,
@@ -116,7 +113,7 @@ const TenziesGame = () => {
                     }}
                 >
                     <WinResults />
-                </WinContext.Provider>
+                </GameContext.Provider>
             )}
 
             {!win && <p className="instructions">{GameInstructions}</p>}

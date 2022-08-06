@@ -6,14 +6,19 @@ import TenziesGame from "./components/TenziesGame";
 import Leaderboard from "./components/Leaderboard";
 
 function App() {
-    const [dbStatus, setDbStatus] = useState(false);
+    // check and set database connection status
+    const [dbStatus, setDbStatus] = useState(true);
+
+    const [time, setTime] = useState(Date.now());
 
     return (
         <div>
-            <Header />
-            <DBConnectContext.Provider value={{ dbStatus, setDbStatus }}>
+            <DBConnectContext.Provider
+                value={{ dbStatus: dbStatus, setDbStatus: setDbStatus }}
+            >
+                <Header onClickHomePage={() => setTime(Date.now())} />
                 <Routes>
-                    <Route path="/" element={<TenziesGame />} />
+                    <Route path="/" element={<TenziesGame timeNow={time} />} />
                     <Route path="/leaderboard" element={<Leaderboard />} />
                 </Routes>
             </DBConnectContext.Provider>

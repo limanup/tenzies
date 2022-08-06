@@ -12,7 +12,7 @@ export const GameInstructions: string =
 export const NoDBConnection: string = "No connection to leaderboard database.";
 
 // useContext to pass data thru component tree
-export const WinContext = createContext({
+export const GameContext = createContext({
     rollCount: 0,
     totalTimeUsed: 0,
     resetGame: () => {},
@@ -20,6 +20,6 @@ export const WinContext = createContext({
 
 // useContext to check database connection
 export const DBConnectContext = createContext({
-    dbStatus: false,
+    dbStatus: true,
     setDbStatus: (dbStatus: boolean) => {},
 });

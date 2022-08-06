@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import {
     BestRecordURL,
     DBConnectContext,
-    WinContext,
+    GameContext,
 } from "../constants/Constants";
 
 // get best record from database
@@ -14,13 +14,22 @@ const useBestRecordQuery = () => {
 
     useEffect(() => {
         const getBestRecord = async () => {
-            await fetch(BestRecordURL)
-                .then((res) => res.json())
-                .then((data) => {
+            // try to get best record from leaderboard database
+            try {
+                const res = await fetch(BestRecordURL);
+                if (res.status === 200) {
+                    const data = await res.json();
                     setBestRecord(data?.totalTimeUsed || 0);
-                    setDbStatus(true);
-                })
-                .catch((error) => console.log("Error: ", error));
+                } else {
+                    // log status text if response status is not 200
+                    console.log("Status text:", res.statusText);
+                    throw new Error(`Status text: ${res.statusText}`);
+                }
+            } catch (err) {
+                // no connection to database
+                setDbStatus(false);
+                throw new Error(String(err));
+            }
         };
         getBestRecord();
     }, []);
@@ -30,7 +39,8 @@ const useBestRecordQuery = () => {
 
 function BestRecord() {
     const bestRecord = useBestRecordQuery();
-    const { totalTimeUsed } = useContext(WinContext);
+    const { totalTimeUsed } = useContext(GameContext);
+
     return (
         <p>
             {totalTimeUsed > bestRecord

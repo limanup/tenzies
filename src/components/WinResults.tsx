@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { DBConnectContext, NoDBConnection, WinContext } from "../constants/Constants";
+import { DBConnectContext, NoDBConnection, GameContext } from "../constants/Constants";
 import BestRecord from "./BestRecord";
 import SaveRecord from "./SaveRecord";
 
 const WinResults = () => {
     // get data from useContext
-    const { rollCount, totalTimeUsed } = useContext(WinContext);
+    const { rollCount, totalTimeUsed } = useContext(GameContext);
 
     // check database connection
     const { dbStatus } = useContext(DBConnectContext);

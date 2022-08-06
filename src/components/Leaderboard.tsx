@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import { Table } from "react-bootstrap";
 import {
     DBConnectContext,
@@ -15,16 +14,28 @@ const Leaderboard = () => {
     const { dbStatus, setDbStatus } = useContext(DBConnectContext);
 
     useEffect(() => {
-        axios
-            .get(LeaderBoardURL)
-            .then(({ data, status }) => {
-                if (status === 200) {
-                    setDbStatus(true)
-                    console.log(dbStatus)
+        const getLeaderBoard = async () => {
+            // try to get from leaderboard database
+            try {
+                const res = await fetch(LeaderBoardURL);
+                if (res.status === 200) {
+                    const data = await res.json();
+                    setDbStatus(true);
+                    setRecordList(data);
                 }
-                setRecordList(data);
-            })
-            .catch((err) => console.log(err));
+
+                if (!res.ok) {
+                    // console.log(res.statusText)
+                    throw new Error(`Error! statusText: ${res.statusText}`);
+
+                    // no connection to database
+                }
+            } catch (err) {
+                setDbStatus(false);
+                throw new Error(String(err));
+            }
+        };
+        getLeaderBoard();
     }, []);
 
     const DataTable = () => {
@@ -46,7 +57,9 @@ const Leaderboard = () => {
                 </thead>
                 <tbody>{DataTable()}</tbody>
             </Table>
-            {!dbStatus && <label className="status-msg">{NoDBConnection}</label>}
+            {!dbStatus && (
+                <label className="status-msg">{NoDBConnection}</label>
+            )}
         </main>
     );
 };

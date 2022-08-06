@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import {
     DBConnectContext,
     LeaderBoardURL,
-    WinContext,
+    GameContext,
 } from "../constants/Constants";
 
 const SaveRecord = () => {
     // get data from useContext
-    const { rollCount, totalTimeUsed, resetGame } = useContext(WinContext);
+    const { rollCount, totalTimeUsed, resetGame } = useContext(GameContext);
 
     // check database connection status
     const { dbStatus } = useContext(DBConnectContext);
@@ -19,39 +19,51 @@ const SaveRecord = () => {
         rollCount: rollCount,
         totalTimeUsed: totalTimeUsed,
     });
-    console.log(record);
 
     // display status message
     const [status, setStatus] = useState("");
     const navigate = useNavigate();
 
     // save record to leaderboard database
-    async function saveRecord(e: React.MouseEvent<HTMLButtonElement>) {
+    const saveRecord = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
         if (!record.name) {
             setStatus("Must enter pseudo name to save record!");
             return;
         } else if (record.totalTimeUsed === 0) {
-            setStatus("Something went wrong, please refresh the page.");
+            setStatus("Something went wrong, please F5 to refresh the page.");
             return;
         } else {
-            const res = await fetch(LeaderBoardURL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(record),
-            });
-            if (res.status === 200) {
-                setStatus("Record added.");
-                // resetGame;
-                // go to leaderboard page
-                // navigate("/leaderboard");
-            } else if (dbStatus && res.status === 500) {
-                setStatus("Duplicate pseudo name, please choose another name.");
-                return;
-            } else {
-                setStatus("Record not added.");
-                return;
+            // try post to leaderboard database
+            try {
+                const res = await fetch(LeaderBoardURL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(record),
+                });
+                if (res.status === 200) {
+                    setStatus("Record saved.");
+                    resetGame();
+                    // go to leaderboard page
+                    navigate("/leaderboard");
+
+                    // connected to database but cannot insert record
+                } else if (dbStatus && res.status === 500) {
+                    setStatus(
+                        "Duplicate pseudo name, please choose another name."
+                    );
+                    return;
+
+                    // other status error
+                } else {
+                    setStatus("Status text: " + res.statusText);
+                    return;
+
+                    // no connection to database
+                }
+            } catch (err) {
+                throw new Error(String(err));
             }
 
             // old code using fetch
@@ -90,7 +102,7 @@ const SaveRecord = () => {
             //         return;
             //     });
         }
-    }
+    };
 
     return (
         <div>
