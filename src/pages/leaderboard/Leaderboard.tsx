@@ -1,11 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { Table } from "react-bootstrap";
-import {
-    DBConnectContext,
-    LeaderBoardURL,
-    NoDBConnection,
-} from "../constants/Constants";
 import RecordTableRow from "./RecordTableRow";
+import { LeaderBoardURL, NoDBConnection } from "../../constants/Constants";
+import { DBConnectContext } from "../../context/Context";
 
 const Leaderboard = () => {
     const [recordList, setRecordList] = useState([]);

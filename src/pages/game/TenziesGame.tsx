@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-import {
-    GameInstructions,
-    GameName,
-    GameContext,
-} from "../constants/Constants";
 import Confetti from "react-confetti";
 import Dice from "./Dice";
 import WinResults from "./WinResults";
+import { GameInstructions, GameName } from "../../constants/Constants";
+import { GameContext } from "../../context/Context";
 
 interface Die {
     value: number;

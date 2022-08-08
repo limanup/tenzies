@@ -1,9 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-import {
-    BestRecordURL,
-    DBConnectContext,
-    GameContext,
-} from "../constants/Constants";
+import { BestRecordURL } from "../../constants/Constants";
+import { GameContext, DBConnectContext } from "../../context/Context";
 
 // get best record from database
 const useBestRecordQuery = () => {

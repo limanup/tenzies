@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { DBConnectContext } from "./constants/Constants";
+import { DBConnectContext } from "./context/Context";
 import Header from "./components/Header";
-import TenziesGame from "./components/TenziesGame";
-import Leaderboard from "./components/Leaderboard";
+import TenziesGame from "./pages/game/TenziesGame";
+import Leaderboard from "./pages/leaderboard/Leaderboard";
 
 function App() {
     // check and set database connection status

@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import { DBConnectContext, NoDBConnection, GameContext } from "../constants/Constants";
 import BestRecord from "./BestRecord";
-import SaveRecord from "./SaveRecord";
+import SaveRecord from "../../features/saverecord/SaveRecord";
+import { NoDBConnection } from "../../constants/Constants";
+import { GameContext, DBConnectContext } from "../../context/Context";
 
 const WinResults = () => {
     // get data from useContext
@@ -30,9 +31,7 @@ const WinResults = () => {
             ) : (
                 <div>
                     <br />
-                    <p className="status-msg">
-                        {NoDBConnection}
-                    </p>
+                    <p className="status-msg">{NoDBConnection}</p>
                 </div>
             )}
         </div>

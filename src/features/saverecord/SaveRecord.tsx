@@ -1,10 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-    DBConnectContext,
-    LeaderBoardURL,
-    GameContext,
-} from "../constants/Constants";
+import { LeaderBoardURL } from "../../constants/Constants";
+import { GameContext, DBConnectContext } from "../../context/Context";
 
 const SaveRecord = () => {
     // get data from useContext
