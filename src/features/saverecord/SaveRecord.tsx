@@ -57,47 +57,11 @@ const SaveRecord = () => {
                     setStatus("Status text: " + res.statusText);
                     return;
 
-                    // no connection to database
                 }
+                // no connection to database
             } catch (err) {
                 throw new Error(String(err));
             }
-
-            // old code using fetch
-            // fetch(LeaderBoardURL, {
-            //     method: "POST",
-            //     headers: { "Content-Type": "application/json" },
-            //     body: JSON.stringify(record),
-            // });
-            // .then((res) => {
-            //     if (res.status === 200) {
-            //         console.log("Record added.");
-            //     } else {
-            //         console.log("Promise rejected.");
-            //         Promise.reject();
-            //         return;
-            //     }
-            // })
-            // .catch((err) => {
-            //     console.log(err);
-            //     return;
-            // });
-
-            // old code using axios
-            // await axios
-            //     .post(LeaderBoardURL, record)
-            //     .then((res) => {
-            //         if (res.status === 200) {
-            //             console.log("record added");
-            //         } else {
-            //             console.log("promise reject");
-            //             Promise.reject();
-            //         }
-            //     })
-            //     .catch((err) => {
-            //         console.log(err);
-            //         return;
-            //     });
         }
     };
 
