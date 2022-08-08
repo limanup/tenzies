@@ -6,4 +6,4 @@ Additional features:
 -   [x] Track the number of rolls
 -   [x] Track the time it took to win
 -   [x] Save best time to localStorage
--   [ ] use database to track each user's records?
+-   [x] use database to track each winner's records
