@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-// import mongoose, { Schema, InferSchemaType } from 'mongoose';
+import { model, Schema, InferSchemaType } from 'mongoose';
 
 const recordSchema = new Schema(
     {
@@ -24,6 +22,4 @@ const recordSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model("RecordModel", recordSchema);
-// const RecordModel = mongoose.model('Record', recordSchema)
-// export {recordSchema, RecordModel}
+export default model('Record', recordSchema)

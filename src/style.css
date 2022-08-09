@@ -64,6 +64,7 @@ main {
 
 .game-stats {
     padding: 10px;
+    height: 50px;
     max-width: 320px;
     color: white;
     margin: auto;
@@ -73,7 +74,7 @@ main {
     font-family: "Inter";
     font-weight: 400;
     font-size: 13.1072px;
-    line-height: 16px;
+    line-height: 15px;
     letter-spacing: -0.03em;
 }
 
