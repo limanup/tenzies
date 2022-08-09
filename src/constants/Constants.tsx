@@ -1,7 +1,7 @@
 // URL
-export const LeaderBoardURL: string = "http://localhost:4000/leaderboard";
+export const LeaderBoardURL: string = "/leaderboard";
 export const BestRecordURL: string =
-    "http://localhost:4000/leaderboard/bestrecord";
+    "/leaderboard/bestrecord";
 
 // static text
 export const GameName: string = "Tenzies";
