@@ -2,7 +2,7 @@ import express, {NextFunction, Request, Response} from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { db } from "./database/db";
+import { db, localdb, port } from "./database/db";
 
 import recordRoute from "./routes/record.route";
 
@@ -39,7 +39,6 @@ app.use("/leaderboard", recordRoute);
 
 
 // PORT
-const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {
     console.log("Connected to port " + port);
 });
