@@ -1,26 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 import Dice from "./Dice";
 import WinResults from "./WinResults";
 import { GameInstructions, GameName } from "../../constants/Constants";
 import { GameContext } from "../../context/Context";
+import ShowLiveStats from "../../features/showlivestats/ShowLiveStats";
 
-interface Die {
+interface DieState {
     value: number;
     isHeld: boolean;
     id: string;
 }
 
-const TenziesGame = () => {
-    // initiate diceList
-    const [diceList, setDiceList] = useState(allNewDice());
+interface GameState {
+    win: boolean;
+    rollCount: number;
+    startTime: number;
+    totalTimeUsed: number;
+}
 
-    // win stats
-    const [win, setWin] = useState(false);
-    const [rollCount, setRollCount] = useState(0);
-    const [startTime, setStartTime] = useState(Date.now());
-    const [totalTimeUsed, setTotalTimeUsed] = useState(10);
+const TenziesGame = () => {
+    // initialize diceList
+    const [diceList, setDiceList] = useState(allNewDice());
 
     // map each die to Die component
     const diceElements = diceList.map((die) => (
@@ -32,14 +34,37 @@ const TenziesGame = () => {
         />
     ));
 
+    // initialize GameState
+    const initialState: GameState = {
+        win: false,
+        rollCount: 0,
+        startTime: Date.now(),
+        totalTimeUsed: 0,
+    };
+
+    const [gameState, dispatch] = useReducer(reducer, initialState);
+
+    // setInterval during game
+    useEffect(() => {
+        let intervalID: number;
+        // only use interval if game is not won
+        if (!gameState.win) {
+            intervalID = window.setInterval(() => {
+                dispatch({ type: "IncrementTime" });
+            }, 1000);
+        }
+
+        // side effect clean up
+        return () => {
+            clearInterval(intervalID);
+        };
+    }, [gameState.win]);
+
     // check win conditions on every Die update
     useEffect(() => {
         const diceValue: number = diceList[0].value;
         if (diceList.every((die) => die.isHeld && die.value === diceValue)) {
-            setWin(true);
-
-            // const timeUsed = (Date.now() - startTime) / 1000;
-            setTotalTimeUsed((Date.now() - startTime) / 1000);
+            dispatch({ type: "Won" });
         }
     }, [diceList]);
 
@@ -48,7 +73,7 @@ const TenziesGame = () => {
      */
 
     // function to generate random number
-    function generateRandomDie(): Die {
+    function generateRandomDie(): DieState {
         return {
             id: nanoid(),
             value: Math.ceil(Math.random() * 6),
@@ -58,7 +83,7 @@ const TenziesGame = () => {
 
     // roll all dice (10)
     function allNewDice() {
-        let diceList: Die[] = [];
+        let diceList: DieState[] = [];
 
         for (let i: number = 0; i < 10; i++) {
             diceList.push(generateRandomDie());
@@ -85,44 +110,75 @@ const TenziesGame = () => {
                 oldDie.isHeld ? oldDie : generateRandomDie()
             )
         );
-        setRollCount((prevCount) => prevCount + 1);
+        dispatch({ type: "AddRollCount" });
     }
 
     // reset entire game
     function resetGame() {
-        setWin(false);
-        setDiceList(allNewDice());
-        setRollCount(0);
-        setStartTime(Date.now());
+        dispatch({ type: "ResetGame" });
+    }
+
+    // reducer function for useReducer
+    function reducer(
+        gameState: GameState,
+        action: {
+            type: "AddRollCount" | "IncrementTime" | "Won" | "ResetGame";
+        }
+    ) {
+        switch (action.type) {
+            // +1 to rollCount
+            case "AddRollCount":
+                return { ...gameState, rollCount: gameState.rollCount + 1 };
+            // +1 second to totalTimeUsed
+            case "IncrementTime":
+                return {
+                    ...gameState,
+                    totalTimeUsed: gameState.totalTimeUsed + 1,
+                };
+            // set win status to true and get accurate totalTimeUsed if game won
+            case "Won":
+                return {
+                    ...gameState,
+                    win: true,
+                    totalTimeUsed: (Date.now() - gameState.startTime) / 1000,
+                };
+            // reset game to initial state
+            case "ResetGame":
+                setDiceList(allNewDice());
+                return initialState;
+        }
     }
 
     return (
-        <main>
-            {win && <Confetti />}
-            <h1 className="title">{GameName}</h1>
+        <GameContext.Provider
+            value={{
+                rollCount: gameState.rollCount,
+                totalTimeUsed: gameState.totalTimeUsed,
+                resetGame: resetGame,
+            }}
+        >
+            <div>
+                {gameState.win && <Confetti />}
+                <ShowLiveStats />
+                <main>
+                    <h1 className="title">{GameName}</h1>
 
-            {win && (
-                <GameContext.Provider
-                    value={{
-                        rollCount: rollCount,
-                        totalTimeUsed: totalTimeUsed,
-                        resetGame: resetGame,
-                    }}
-                >
-                    <WinResults />
-                </GameContext.Provider>
-            )}
+                    {gameState.win && <WinResults />}
 
-            {!win && <p className="instructions">{GameInstructions}</p>}
-            <div className="dice-wrapper">{diceElements}</div>
-            <button
-                className="roll-btn"
-                type="button"
-                onClick={win ? resetGame : rollDice}
-            >
-                {win ? "New Game" : "Roll"}
-            </button>
-        </main>
+                    {!gameState.win && (
+                        <p className="instructions">{GameInstructions}</p>
+                    )}
+                    <div className="dice-wrapper">{diceElements}</div>
+                    <button
+                        className="roll-btn"
+                        type="button"
+                        onClick={gameState.win ? resetGame : rollDice}
+                    >
+                        {gameState.win ? "New Game" : "Roll"}
+                    </button>
+                </main>
+            </div>
+        </GameContext.Provider>
     );
 };
 
