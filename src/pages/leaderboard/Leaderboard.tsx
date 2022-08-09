@@ -42,22 +42,25 @@ const Leaderboard = () => {
     };
 
     return (
-        <main className="table-wrapper">
-            <Table bordered striped hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Pseudo name</th>
-                        <th>Roll count</th>
-                        <th>Total time used (seconds)</th>
-                    </tr>
-                </thead>
-                <tbody>{DataTable()}</tbody>
-            </Table>
-            {!dbStatus && (
-                <label className="status-msg">{NoDBConnection}</label>
-            )}
-        </main>
+        <div>
+            <div className="game-stats"></div>
+            <main className="table-wrapper">
+                <Table bordered striped hover>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Pseudo name</th>
+                            <th>Roll count</th>
+                            <th>Total time used (seconds)</th>
+                        </tr>
+                    </thead>
+                    <tbody>{DataTable()}</tbody>
+                </Table>
+                {!dbStatus && (
+                    <label className="status-msg">{NoDBConnection}</label>
+                )}
+            </main>
+        </div>
     );
 };
 
