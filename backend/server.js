@@ -52,14 +52,14 @@ app.use(body_parser_1.default.urlencoded({
     extended: true,
 }));
 app.use((0, cors_1.default)());
-// Have Node serve the files for our built React app
-app.use(express_1.default.static(path.resolve(__dirname, "../frontend/build")));
-// // for testing
-// app.get('/', (req, res) => {
+// base route is /leaderboard, to handle all API requests
+app.use("/leaderboard", record_route_1.default);
+// for testing
+// app.get('/leaderboard', (req, res) => {
 //     res.send(`<h1>API works.</h1>`)
 // })
-// base route is /leaderboard, to handle GET, POST requests
-app.use("/leaderboard", record_route_1.default);
+// Have Node serve the files for our built React app
+app.use(express_1.default.static(path.resolve(__dirname, "../frontend/build")));
 // All other GET request not handled before will return our React app
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));

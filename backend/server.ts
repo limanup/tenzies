@@ -35,16 +35,16 @@ app.use(
 );
 app.use(cors());
 
-// Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, "../frontend/build")));
+// base route is /leaderboard, to handle all API requests
+app.use("/leaderboard", recordRoute);
 
-// // for testing
-// app.get('/', (req, res) => {
+// for testing
+// app.get('/leaderboard', (req, res) => {
 //     res.send(`<h1>API works.</h1>`)
 // })
 
-// base route is /leaderboard, to handle GET, POST requests
-app.use("/leaderboard", recordRoute);
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, "../frontend/build")));
 
 // All other GET request not handled before will return our React app
 app.get("*", (req, res) => {
