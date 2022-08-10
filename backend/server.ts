@@ -1,8 +1,9 @@
-import express, {NextFunction, Request, Response} from "express";
+import { db, localdb, port } from "./database/db";
+import * as path from "path";
+import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { db, localdb, port } from "./database/db";
 
 import recordRoute from "./routes/record.route";
 
@@ -33,10 +34,22 @@ app.use(
     })
 );
 app.use(cors());
-// base route is /leaderboard
-app.use("/leaderboard", recordRoute);
 
+// base route to handle all API requests
+app.use("/api", recordRoute);
 
+// for testing
+// app.get('/api', (req, res) => {
+//     res.send(`<h1>API works.</h1>`)
+// })
+
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, "../frontend/build")));
+
+// All other GET request not handled before will return our React app
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
+});
 
 // PORT
 const server = app.listen(port, () => {
@@ -51,7 +64,7 @@ app.use((req, res, next) => {
 // error handler
 // https://expressjs.com/en/guide/error-handling.html
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.error("Error name:", err.name)
+    console.error("Error name:", err.name);
     console.error("Error message:", err.message);
     res.status(500).send(err.message);
 });

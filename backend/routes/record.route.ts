@@ -5,7 +5,7 @@ import RecordModel from "../Models/Record";
 const router = Router();
 
 // Read record
-router.get("/", async (req, res, next) => {
+router.get("/leaderboard", async (req, res, next) => {
     await RecordModel.find()
         .sort({ totalTimeUsed: 1 })
         .exec((error, data) => {
@@ -55,7 +55,7 @@ router.get("/bestrecord", async (req, res, next) => {
 });
 
 // Add record
-router.post("/", async (req, res, next) => {
+router.post("/leaderboard", async (req, res, next) => {
     try {
         const data = await RecordModel.create(req.body);
         res.json(data);
