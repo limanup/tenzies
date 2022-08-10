@@ -52,8 +52,8 @@ app.use(body_parser_1.default.urlencoded({
     extended: true,
 }));
 app.use((0, cors_1.default)());
-// Have Node serve the files foir our built React app
-app.use(express_1.default.static(path.join(__dirname, "../frontend/build")));
+// Have Node serve the files for our built React app
+app.use(express_1.default.static(path.resolve(__dirname, "../frontend/build")));
 // // for testing
 // app.get('/', (req, res) => {
 //     res.send(`<h1>API works.</h1>`)
