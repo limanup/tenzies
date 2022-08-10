@@ -33,6 +33,11 @@ app.use(
     })
 );
 app.use(cors());
+// for testing
+app.get('/', (req, res) => {
+    res.send(`<h1>API works.</h1>`)
+})
+
 // base route is /leaderboard
 app.use("/leaderboard", recordRoute);
 
