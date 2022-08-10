@@ -17,7 +17,7 @@ const express_1 = require("express");
 const Record_1 = __importDefault(require("../Models/Record"));
 const router = (0, express_1.Router)();
 // Read record
-router.get("/", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/leaderboard", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     yield Record_1.default.find()
         .sort({ totalTimeUsed: 1 })
         .exec((error, data) => {
@@ -65,7 +65,7 @@ router.get("/bestrecord", (req, res, next) => __awaiter(void 0, void 0, void 0, 
     });
 }));
 // Add record
-router.post("/", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/leaderboard", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = yield Record_1.default.create(req.body);
         res.json(data);

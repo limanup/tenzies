@@ -52,10 +52,10 @@ app.use(body_parser_1.default.urlencoded({
     extended: true,
 }));
 app.use((0, cors_1.default)());
-// base route is /leaderboard, to handle all API requests
-app.use("/leaderboard", record_route_1.default);
+// base route to handle all API requests
+app.use("/api", record_route_1.default);
 // for testing
-// app.get('/leaderboard', (req, res) => {
+// app.get('/api', (req, res) => {
 //     res.send(`<h1>API works.</h1>`)
 // })
 // Have Node serve the files for our built React app
