@@ -4,9 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "tsconvert": "npx tsc",
         "dev": "nodemon ./server.ts",
-        "build": "cd frontend && npm install && npm run build",
+        "build": "npx tsc",
         "start": "node dist/server.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },

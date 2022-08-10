@@ -35,8 +35,8 @@ app.use(
 );
 app.use(cors());
 
-// Have Node serve the files foir our built React app
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, "../frontend/build")));
 
 // // for testing
 // app.get('/', (req, res) => {
