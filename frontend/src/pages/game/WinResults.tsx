@@ -5,10 +5,8 @@ import { NoDBConnection } from "../../constants/Constants";
 import { GameContext, DBConnectContext } from "../../context/Context";
 
 const WinResults = () => {
-    // get data from useContext
     const { rollCount, totalTimeUsed } = useContext(GameContext);
 
-    // check database connection
     const { dbStatus } = useContext(DBConnectContext);
 
     return (

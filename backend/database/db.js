@@ -23,10 +23,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.port = exports.db = exports.localdb = void 0;
-// import 'dotenv/config'
+exports.port = exports.db = void 0;
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
-exports.localdb = "mongodb://localhost:27017/reactdb";
 exports.db = process.env.MONGODB_URL || '';
 exports.port = process.env.PORT || 4000;

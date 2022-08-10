@@ -2,11 +2,9 @@ import { useState, useEffect, useContext } from "react";
 import { BestRecordURL } from "../../constants/Constants";
 import { GameContext, DBConnectContext } from "../../context/Context";
 
-// get best record from database
 const useBestRecordQuery = () => {
     const [bestRecord, setBestRecord] = useState(0);
 
-    // set dabatase connection status
     const { setDbStatus } = useContext(DBConnectContext);
 
     useEffect(() => {

@@ -3,8 +3,8 @@ import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 import Dice from "./Dice";
 import WinResults from "./WinResults";
-import { GameInstructions, GameName } from "../../constants/Constants";
 import { GameContext } from "../../context/Context";
+import { GameInstructions, GameName } from "../../constants/Constants";
 import ShowLiveStats from "../../features/showlivestats/ShowLiveStats";
 
 interface DieState {
@@ -21,10 +21,8 @@ interface GameState {
 }
 
 const TenziesGame = () => {
-    // initialize diceList
     const [diceList, setDiceList] = useState(allNewDice());
 
-    // map each die to Die component
     const diceElements = diceList.map((die) => (
         <Dice
             value={die.value}
@@ -34,7 +32,6 @@ const TenziesGame = () => {
         />
     ));
 
-    // initialize GameState
     const initialState: GameState = {
         win: false,
         rollCount: 0,
@@ -47,14 +44,12 @@ const TenziesGame = () => {
     // setInterval during game
     useEffect(() => {
         let intervalID: number;
-        // only use interval if game is not won
         if (!gameState.win) {
             intervalID = window.setInterval(() => {
                 dispatch({ type: "IncrementTime" });
             }, 1000);
         }
 
-        // side effect clean up
         return () => {
             clearInterval(intervalID);
         };
@@ -72,7 +67,6 @@ const TenziesGame = () => {
      * Functions
      */
 
-    // function to generate random number
     function generateRandomDie(): DieState {
         return {
             id: nanoid(),
@@ -81,7 +75,6 @@ const TenziesGame = () => {
         };
     }
 
-    // roll all dice (10)
     function allNewDice() {
         let diceList: DieState[] = [];
 
@@ -92,7 +85,6 @@ const TenziesGame = () => {
         return diceList;
     }
 
-    // hold dice
     function holdDice(id: string) {
         setDiceList((oldDice) =>
             oldDice.map((oldDie) =>
@@ -103,7 +95,6 @@ const TenziesGame = () => {
         );
     }
 
-    // roll unheld dice during game
     function rollDice() {
         setDiceList((oldDice) =>
             oldDice.map((oldDie) =>
@@ -113,12 +104,10 @@ const TenziesGame = () => {
         dispatch({ type: "AddRollCount" });
     }
 
-    // reset entire game
     function resetGame() {
         dispatch({ type: "ResetGame" });
     }
 
-    // reducer function for useReducer
     function reducer(
         gameState: GameState,
         action: {
@@ -142,7 +131,7 @@ const TenziesGame = () => {
                     win: true,
                     totalTimeUsed: (Date.now() - gameState.startTime) / 1000,
                 };
-            // reset game to initial state
+
             case "ResetGame":
                 setDiceList(allNewDice());
                 return initialState;

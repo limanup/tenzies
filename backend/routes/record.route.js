@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-// import { CallbackError } from "mongoose";
 const Record_1 = __importDefault(require("../Models/Record"));
 const router = (0, express_1.Router)();
 // Read record
@@ -30,29 +29,7 @@ router.get("/leaderboard", (req, res, next) => __awaiter(void 0, void 0, void 0,
         }
     });
 }));
-// // Read record using find.(callback function)
-// router.get("/", (req, res, next) => {
-//     RecordModel.find((error, data) => {
-//         if (error) {
-//             console.log(error)
-//             return next(error);
-//         } else {
-//             res.json(data);
-//         }
-//         // sort table by total time used asec
-//     }).sort({ totalTimeUsed: 1 });
-// });
-// // Read record using try/catch to read record
-// router.get("/", async (req, res, next) => {
-//     try {
-//         const data = await RecordModel.find().sort({totalTImeUsed: 1})
-//         res.json(data)
-//     } catch (error) {
-//         console.log(error)
-//         next(error)
-//     }
-// })
-// get best record
+// Get best record
 router.get("/bestrecord", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     yield Record_1.default.findOne()
         .sort({ totalTimeUsed: 1 })
@@ -75,13 +52,4 @@ router.post("/leaderboard", (req, res, next) => __awaiter(void 0, void 0, void 0
         return next(error);
     }
 }));
-// Add record by using callback function
-// router.post("/", (req, res, next) => {
-// RecordModel.create(req.body, (error: CallbackError) => {
-//     if (error) {
-//         return next(error)
-//     }
-//     res.json()
-// })
-// })
 exports.default = router;

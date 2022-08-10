@@ -1,4 +1,4 @@
-// URL
+// API route
 export const LeaderBoardURL: string = "/api/leaderboard";
 export const BestRecordURL: string = "/api/bestrecord";
 

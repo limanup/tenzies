@@ -7,12 +7,10 @@ import { DBConnectContext } from "../../context/Context";
 const Leaderboard = () => {
     const [recordList, setRecordList] = useState([]);
 
-    // check and set database connection status
     const { dbStatus, setDbStatus } = useContext(DBConnectContext);
 
     useEffect(() => {
         const getLeaderBoard = async () => {
-            // try to get from leaderboard database
             try {
                 const res = await fetch(LeaderBoardURL);
                 if (res.status === 200) {
@@ -22,11 +20,9 @@ const Leaderboard = () => {
                 }
 
                 if (!res.ok) {
-                    // console.log(res.statusText)
                     throw new Error(`Error! statusText: ${res.statusText}`);
-
-                    // no connection to database
                 }
+                // no connection to database
             } catch (err) {
                 setDbStatus(false);
                 throw new Error(String(err));

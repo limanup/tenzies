@@ -1,7 +1,7 @@
 {
     "name": "tenzies",
     "version": "1.0.0",
-    "description": "",
+    "description": "tenzies game built with MERN stack",
     "main": "index.js",
     "scripts": {
         "build": "cd ./frontend && npm install && npm run build",

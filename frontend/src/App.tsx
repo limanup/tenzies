@@ -6,7 +6,12 @@ import TenziesGame from "./pages/game/TenziesGame";
 import Leaderboard from "./pages/leaderboard/Leaderboard";
 
 function App() {
-    // check and set database connection status
+    /**
+     * initialize DB connection status to true
+     * if no connection detected, will set to false
+     * init false -> true will flash 'no connection' in the first second
+     *
+     */
     const [dbStatus, setDbStatus] = useState(true);
 
     return (

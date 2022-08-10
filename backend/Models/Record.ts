@@ -1,4 +1,4 @@
-import { model, Schema, InferSchemaType } from 'mongoose';
+import { model, Schema } from "mongoose";
 
 const recordSchema = new Schema(
     {
@@ -6,7 +6,7 @@ const recordSchema = new Schema(
             type: String,
             required: true,
             index: true,
-            unique: true
+            unique: true,
         },
         rollCount: {
             type: Number,
@@ -22,4 +22,4 @@ const recordSchema = new Schema(
     }
 );
 
-export default model('Record', recordSchema)
+export default model("Record", recordSchema);

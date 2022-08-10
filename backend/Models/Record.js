@@ -6,7 +6,7 @@ const recordSchema = new mongoose_1.Schema({
         type: String,
         required: true,
         index: true,
-        unique: true
+        unique: true,
     },
     rollCount: {
         type: Number,
@@ -19,4 +19,4 @@ const recordSchema = new mongoose_1.Schema({
 }, {
     collection: "records",
 });
-exports.default = (0, mongoose_1.model)('Record', recordSchema);
+exports.default = (0, mongoose_1.model)("Record", recordSchema);

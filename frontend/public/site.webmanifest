@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "tenzies game",
+    "short_name": "tenzies",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

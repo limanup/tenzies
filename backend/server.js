@@ -33,15 +33,8 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const record_route_1 = __importDefault(require("./routes/record.route"));
-// Configure mongoDB Database
-// no need to configure as we are using mondodb v6
-// mongoose.set("useNewUrlParser", true);
-// mongoose.set("useFindAndModify", false);
-// mongoose.set("useCreateIndex", true);
-// mongoose.set("useUnifiedTopology", true);
 const app = (0, express_1.default)();
 // Connecting mongoDB database
-// mongoose.Promise = global.Promise;
 mongoose_1.default.connect(db_1.db).then(() => {
     console.log("Database successfully connected!");
 }, (error) => {
@@ -54,13 +47,9 @@ app.use(body_parser_1.default.urlencoded({
 app.use((0, cors_1.default)());
 // base route to handle all API requests
 app.use("/api", record_route_1.default);
-// for testing
-// app.get('/api', (req, res) => {
-//     res.send(`<h1>API works.</h1>`)
-// })
-// Have Node serve the files for our built React app
+// Have Node serve the files for the built React app
 app.use(express_1.default.static(path.resolve(__dirname, "../frontend/build")));
-// All other GET request not handled before will return our React app
+// All other GET request not handled before will return the React app
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
 });
