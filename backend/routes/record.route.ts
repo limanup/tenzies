@@ -8,6 +8,7 @@ const router = Router();
 router.get("/leaderboard", async (req, res, next) => {
     await RecordModel.find()
         .sort({ totalTimeUsed: 1 })
+        .limit(10)
         .exec((error, data) => {
             if (error) {
                 next(error);
