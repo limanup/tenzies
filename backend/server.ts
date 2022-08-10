@@ -35,11 +35,11 @@ app.use(
 );
 app.use(cors());
 
-// base route is /leaderboard, to handle all API requests
-app.use("/leaderboard", recordRoute);
+// base route to handle all API requests
+app.use("/api", recordRoute);
 
 // for testing
-// app.get('/leaderboard', (req, res) => {
+// app.get('/api', (req, res) => {
 //     res.send(`<h1>API works.</h1>`)
 // })
 
