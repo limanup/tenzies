@@ -20,6 +20,7 @@ const router = (0, express_1.Router)();
 router.get("/leaderboard", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     yield Record_1.default.find()
         .sort({ totalTimeUsed: 1 })
+        .limit(10)
         .exec((error, data) => {
         if (error) {
             next(error);
