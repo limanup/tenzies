@@ -1,8 +1,8 @@
+import { db, localdb, port } from "./database/db";
 import express, {NextFunction, Request, Response} from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { db, localdb, port } from "./database/db";
 
 import recordRoute from "./routes/record.route";
 
@@ -35,6 +35,8 @@ app.use(
 app.use(cors());
 // base route is /leaderboard
 app.use("/leaderboard", recordRoute);
+
+// app.use(express.static(path.join(__dirname, '../build')))
 
 
 
