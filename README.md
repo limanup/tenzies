@@ -42,6 +42,8 @@ Tenzies Game is a web based game app built with MERN (MongoDB, Express, React, N
 -   `Record.ts` file in `Models` folder defines the Schema of the database and the collection name for querying use.
 -   `record.route.ts` file in `routes` folder defines how data will be processed based on different routes and HTTP methods. For example, `/api/leaderboard` route with `GET` method will query top 10 records from the database, but `POST` method will save player's record to the online database.
 
+---
+
 While the game was initially built with the frontend interface only, with each die displaying numeric value, and with no ability to track game stats, additional features listed below were added later on to improve the game experience.
 
 -   [x] CSS: use dotted dice instead of number
