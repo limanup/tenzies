@@ -50,4 +50,4 @@ While the game was initially built with the frontend interface only, with each d
 -   [x] Track the number of rolls
 -   [x] Track the time it took to win
 -   [x] Save best time to some storage such as localStorage
--   [x] use online database to track each player's records
+-   [x] Use online database to track each player's records
