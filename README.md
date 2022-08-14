@@ -10,7 +10,7 @@ Tenzies Game is a web based game app built with MERN (MongoDB, Express, React, N
 
 **LEADERBOARD**: every player can save their game stats to an online database with their choice of pseudo name. The top 10 players' stats will be displayed on the 'leaderboard' page. Pseudo names cannot be duplicated on leaderboard, the app will give you an error message if you choose an empty or duplicated pseudo name.
 
-#### How the game is built
+#### How the game is built:
 
 **Frontend** interface is built with React v18 using Typescript.
 
