@@ -24,13 +24,14 @@ Tenzies Game is a web based game app built with MERN (MongoDB, Express, React, N
 -   There are two features for this game app, which are `SaveRecord.tsx` for saving player's record to an online database, and `ShowLiveStats.tsx` for displaying live game stats such as # of rolls currently used and a timer showing total time used in seconds currently.
 -   In the two pages for this app, each page contains individual components which make up for the page.
     > -   `TenziesGame.tsx` page includes all the logic and functions behind the game. A couple of React hooks are used to make the game run as smooth as possible, including `useState`, `useEffect`, `useReducer` and `useContext`.
-    >     > -   ![tenzies-game-page](tenzies-game-page.png)
+    >     > ![tenzies-game-page](tenzies-game-page.png)
+    >     >
     >     > -   `Dice.tsx` is a component repeatedly used in `TenziesGame.tsx`. It renders one die element for the game, there are total ten die elements in this game (_hence the name Tenzies_).
     >     > -   `ShowLiveStats.tsx` is a feature rendered in `TenziesGame.tsx` for displaying live game stats.
     >     > -   `BestRecord.tsx` is the component reaching out to MongoDB API for pulling the current best record stats. The best record will be shown at the end of the game.
     >     > -   `WinResults.tsx` is the component displaying player's final game stats at the end of the game. It also renders the `BestRecord.tsx` component and the `SaveRecord.tsx` feature after the game ends.
     > -   `Leaderboard.tsx` page calls MongoDB API to pull the top 10 best records and renders `RecordTableRow.tsx` component to display those records as table rows for the page.
-    >     > -   ![tenzies-leaderboard-page](tenzies-leaderboard-page.png)
+    >     > ![tenzies-leaderboard-page](tenzies-leaderboard-page.png)
 
 **Backend** connection is built with Express and Node using Typescript as well.
 
