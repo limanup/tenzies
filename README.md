@@ -21,7 +21,7 @@ Tenzies Game is a web based game app built with MERN (MongoDB, Express, React, N
 -   'TenziesGame.tsx' and 'Leaderboard.tsx' are the two pages for this app. 'TenziesGame.tsx' hosts the game interface and all components which make up of the game. 'Leaderboard.tsx' connects to an online database hosted on MongoDB and displays top 10 game records among all players.
 -   Static string constants are defined and saved in 'Constants.tsx'.
 -   React Contexts are used throughout the app to manage state gloablly, they are defined and saved in 'Context.tsx'.
--
+-   In the two pages for this app, each page contains individual components which make up
 
 Additional features:
 
