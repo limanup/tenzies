@@ -1,6 +1,6 @@
 # TENZIES GAME
 
-#### Video Demo: <URL HERE>
+#### Video Demo: [Tenzies Game](https://youtu.be/S-MbcakGkCg)
 
 #### Description:
 
