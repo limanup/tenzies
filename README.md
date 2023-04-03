@@ -5,7 +5,7 @@
 #### Description:
 
 Tenzies Game is a web based game app built with MERN (MongoDB, Express, React, Node) stack using Typescript on both frontend and backend.   
-It was hosted on [Heroku](https://tenzies-mern-stack.herokuapp.com/) until Heroku ended the free tiers. Currently working on migrating the app from Heroku to Vercel. 
+The app was originally hosted on [Heroku](https://tenzies-mern-stack.herokuapp.com/) until Heroku ended the free tiers. Currently working on migrating the app from Heroku to Vercel. 
 
 **HOW TO PLAY**: every player gets 10 dice rolled with random numbers on them, the player can choose to "freeze" some of the dice to keep the number on dice unchanged between rolls. The player's goal is to use the least time to roll the dice until all dice are on the same number.
 
