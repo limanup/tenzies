@@ -1,6 +1,6 @@
 // API route
-export const LeaderBoardURL: string = "/api/leaderboard";
-export const BestRecordURL: string = "/api/bestrecord";
+export const LeaderBoardURL: string = "https://tenzies-limanup-backend.vercel.app/api/leaderboard";
+export const BestRecordURL: string = "https://tenzies-limanup-backend.vercel.app/api/bestrecord";
 
 // static text
 export const GameName: string = "Tenzies";
