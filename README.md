@@ -1,11 +1,9 @@
 # TENZIES GAME
 
-#### Video Demo: [Tenzies Game](https://youtu.be/S-MbcakGkCg)
-
 #### Description:
 
-Tenzies Game is a web based game app built with MERN (MongoDB, Express, React, Node) stack using Typescript on both frontend and backend.   
-The app was originally hosted on [Heroku](https://tenzies-mern-stack.herokuapp.com/) until Heroku ended the free tiers. Currently working on migrating the app from Heroku to Vercel. 
+[Tenzies Game](https://tenzies-limanup.vercel.app/) is a web based game app built with MERN (MongoDB, Express, React, Node) stack using Typescript on both frontend and backend.    
+The app is currently hosted on Vercel. You can start playing the game [here](https://tenzies-limanup.vercel.app/).    
 
 **HOW TO PLAY**: every player gets 10 dice rolled with random numbers on them, the player can choose to "freeze" some of the dice to keep the number on dice unchanged between rolls. The player's goal is to use the least time to roll the dice until all dice are on the same number.
 
@@ -13,7 +11,7 @@ The app was originally hosted on [Heroku](https://tenzies-mern-stack.herokuapp.c
 
 #### How the game is built:
 
-**Frontend** interface is built with React v18 using Typescript.
+**Frontend** interface is built with React using Typescript.
 
 -   All codes are located in the `/frontend/src` folder.
 -   The main file is `index.tsx`, which renders the `App` component and styles the webpage with `style.css`.
@@ -42,6 +40,8 @@ The app was originally hosted on [Heroku](https://tenzies-mern-stack.herokuapp.c
 -   `db.ts` uses `dotenv` package to extract MongoDB URL from `.env` file.
 -   `Record.ts` file in `Models` folder defines the Schema of the database and the collection name for querying use.
 -   `record.route.ts` file in `routes` folder defines how data will be processed based on different routes and HTTP methods. For example, `/api/leaderboard` route with `GET` method will query top 10 records from the database, but `POST` method will save player's record to the online database.
+
+**Video Demo: [Tenzies Game](https://youtu.be/S-MbcakGkCg)**
 
 ---
 
